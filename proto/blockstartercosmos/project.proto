@@ -1,0 +1,14 @@
+syntax = "proto3";
+package mehdisbys.blockstartercosmos.blockstartercosmos;
+
+option go_package = "github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types";
+
+message Project {
+  uint64 id = 1;
+  string title = 2; 
+  string description = 3; 
+  string deadline = 4; 
+  string seller = 5; 
+  string targetFunding = 6; 
+  string creator = 7;
+}

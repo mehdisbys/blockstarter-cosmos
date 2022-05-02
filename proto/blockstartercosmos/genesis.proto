@@ -1,0 +1,17 @@
+syntax = "proto3";
+package mehdisbys.blockstartercosmos.blockstartercosmos;
+
+import "gogoproto/gogo.proto";
+import "blockstartercosmos/params.proto";
+import "blockstartercosmos/project.proto";
+// this line is used by starport scaffolding # genesis/proto/import
+
+option go_package = "github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types";
+
+// GenesisState defines the blockstartercosmos module's genesis state.
+message GenesisState {
+  Params params = 1 [(gogoproto.nullable) = false];
+  repeated Project projectList = 2 [(gogoproto.nullable) = false];
+  uint64 projectCount = 3;
+  // this line is used by starport scaffolding # genesis/proto/state
+}

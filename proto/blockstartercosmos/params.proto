@@ -1,0 +1,12 @@
+syntax = "proto3";
+package mehdisbys.blockstartercosmos.blockstartercosmos;
+
+import "gogoproto/gogo.proto";
+
+option go_package = "github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types";
+
+// Params defines the parameters for the module.
+message Params {
+  option (gogoproto.goproto_stringer) = false;
+  
+}
