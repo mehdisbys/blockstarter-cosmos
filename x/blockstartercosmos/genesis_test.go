@@ -23,6 +23,15 @@ func TestGenesis(t *testing.T) {
 			},
 		},
 		ProjectCount: 2,
+		ContributorsList: []types.Contributors{
+			{
+				Id: 0,
+			},
+			{
+				Id: 1,
+			},
+		},
+		ContributorsCount: 2,
 		// this line is used by starport scaffolding # genesis/test/state
 	}
 
@@ -36,5 +45,7 @@ func TestGenesis(t *testing.T) {
 
 	require.ElementsMatch(t, genesisState.ProjectList, got.ProjectList)
 	require.Equal(t, genesisState.ProjectCount, got.ProjectCount)
+	require.ElementsMatch(t, genesisState.ContributorsList, got.ContributorsList)
+	require.Equal(t, genesisState.ContributorsCount, got.ContributorsCount)
 	// this line is used by starport scaffolding # genesis/test/assert
 }

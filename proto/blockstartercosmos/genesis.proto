@@ -4,6 +4,7 @@ package mehdisbys.blockstartercosmos.blockstartercosmos;
 import "gogoproto/gogo.proto";
 import "blockstartercosmos/params.proto";
 import "blockstartercosmos/project.proto";
+import "blockstartercosmos/contributors.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
 option go_package = "github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types";
@@ -13,5 +14,7 @@ message GenesisState {
   Params params = 1 [(gogoproto.nullable) = false];
   repeated Project projectList = 2 [(gogoproto.nullable) = false];
   uint64 projectCount = 3;
+  repeated Contributors contributorsList = 4 [(gogoproto.nullable) = false];
+  uint64 contributorsCount = 5;
   // this line is used by starport scaffolding # genesis/proto/state
 }

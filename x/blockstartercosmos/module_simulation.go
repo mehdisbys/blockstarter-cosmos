@@ -44,6 +44,18 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgClaimDonation int = 100
 
+	opWeightMsgCreateContributors = "op_weight_msg_contributors"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateContributors int = 100
+
+	opWeightMsgUpdateContributors = "op_weight_msg_contributors"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgUpdateContributors int = 100
+
+	opWeightMsgDeleteContributors = "op_weight_msg_contributors"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgDeleteContributors int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -66,6 +78,17 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 			},
 		},
 		ProjectCount: 2,
+		ContributorsList: []types.Contributors{
+			{
+				Id:      0,
+				Creator: sample.AccAddress(),
+			},
+			{
+				Id:      1,
+				Creator: sample.AccAddress(),
+			},
+		},
+		ContributorsCount: 2,
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&blockstartercosmosGenesis)
@@ -142,6 +165,39 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgClaimDonation,
 		blockstartercosmossimulation.SimulateMsgClaimDonation(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateContributors int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateContributors, &weightMsgCreateContributors, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateContributors = defaultWeightMsgCreateContributors
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateContributors,
+		blockstartercosmossimulation.SimulateMsgCreateContributors(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgUpdateContributors int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgUpdateContributors, &weightMsgUpdateContributors, nil,
+		func(_ *rand.Rand) {
+			weightMsgUpdateContributors = defaultWeightMsgUpdateContributors
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgUpdateContributors,
+		blockstartercosmossimulation.SimulateMsgUpdateContributors(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgDeleteContributors int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgDeleteContributors, &weightMsgDeleteContributors, nil,
+		func(_ *rand.Rand) {
+			weightMsgDeleteContributors = defaultWeightMsgDeleteContributors
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgDeleteContributors,
+		blockstartercosmossimulation.SimulateMsgDeleteContributors(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

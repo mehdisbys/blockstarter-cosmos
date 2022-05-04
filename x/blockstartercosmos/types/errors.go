@@ -8,5 +8,7 @@ import (
 
 // x/blockstartercosmos module sentinel errors
 var (
-	ErrSample = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrSample       = sdkerrors.Register(ModuleName, 1100, "sample error")
+	ErrDeadline     = sdkerrors.Register(ModuleName, 1, "deadline")
+	ErrSendingCoins = sdkerrors.Register(ModuleName, 2, "sending coins")
 )

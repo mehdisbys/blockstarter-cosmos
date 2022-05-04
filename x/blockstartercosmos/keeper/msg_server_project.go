@@ -2,8 +2,10 @@ package keeper
 
 import (
 	"context"
+	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types"
 )
 
@@ -43,7 +45,6 @@ func (k msgServer) CreateProject(goCtx context.Context, msg *types.MsgCreateProj
 	}, nil
 }
 
-/*
 func (k msgServer) UpdateProject(goCtx context.Context, msg *types.MsgUpdateProject) (*types.MsgUpdateProjectResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
@@ -91,4 +92,3 @@ func (k msgServer) DeleteProject(goCtx context.Context, msg *types.MsgDeleteProj
 
 	return &types.MsgDeleteProjectResponse{}, nil
 }
-*/

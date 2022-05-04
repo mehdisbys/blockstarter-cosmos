@@ -2,6 +2,7 @@ syntax = "proto3";
 package mehdisbys.blockstartercosmos.blockstartercosmos;
 
 import "blockstartercosmos/project.proto";
+import "blockstartercosmos/contributors.proto";
 // this line is used by starport scaffolding # proto/tx/import
 
 option go_package = "github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types";
@@ -13,6 +14,9 @@ service Msg {
   rpc DeleteProject(MsgDeleteProject) returns (MsgDeleteProjectResponse);
   rpc FundProject(MsgFundProject) returns (MsgFundProjectResponse);
   rpc ClaimDonation(MsgClaimDonation) returns (MsgClaimDonationResponse);
+rpc CreateContributors(MsgCreateContributors) returns (MsgCreateContributorsResponse);
+  rpc UpdateContributors(MsgUpdateContributors) returns (MsgUpdateContributorsResponse);
+  rpc DeleteContributors(MsgDeleteContributors) returns (MsgDeleteContributorsResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -64,5 +68,33 @@ message MsgClaimDonation {
 
 message MsgClaimDonationResponse {
 }
+
+message MsgCreateContributors {
+  string creator = 1;
+  uint64 projectid = 2;
+  string contributor = 3;
+  string amount = 4;
+}
+
+message MsgCreateContributorsResponse {
+  uint64 id = 1;
+}
+
+message MsgUpdateContributors {
+  string creator = 1;
+  uint64 id = 2;
+  uint64 projectid = 3;
+  string contributor = 4;
+  string amount = 5;
+}
+
+message MsgUpdateContributorsResponse {}
+
+message MsgDeleteContributors {
+  string creator = 1;
+  uint64 id = 2;
+}
+
+message MsgDeleteContributorsResponse {}
 
 // this line is used by starport scaffolding # proto/tx/message

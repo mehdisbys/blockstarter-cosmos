@@ -9,16 +9,36 @@
  * ---------------------------------------------------------------
  */
 
+export interface BlockstartercosmosContributors {
+  /** @format uint64 */
+  id?: string;
+
+  /** @format uint64 */
+  projectid?: string;
+  contributor?: string;
+  amount?: string;
+  creator?: string;
+}
+
 export type BlockstartercosmosMsgClaimDonationResponse = object;
+
+export interface BlockstartercosmosMsgCreateContributorsResponse {
+  /** @format uint64 */
+  id?: string;
+}
 
 export interface BlockstartercosmosMsgCreateProjectResponse {
   /** @format uint64 */
   id?: string;
 }
 
+export type BlockstartercosmosMsgDeleteContributorsResponse = object;
+
 export type BlockstartercosmosMsgDeleteProjectResponse = object;
 
 export type BlockstartercosmosMsgFundProjectResponse = object;
+
+export type BlockstartercosmosMsgUpdateContributorsResponse = object;
 
 export type BlockstartercosmosMsgUpdateProjectResponse = object;
 
@@ -38,6 +58,21 @@ export interface BlockstartercosmosProject {
   creator?: string;
 }
 
+export interface BlockstartercosmosQueryAllContributorsResponse {
+  Contributors?: BlockstartercosmosContributors[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface BlockstartercosmosQueryAllProjectResponse {
   Project?: BlockstartercosmosProject[];
 
@@ -51,6 +86,10 @@ export interface BlockstartercosmosQueryAllProjectResponse {
    *  }
    */
   pagination?: V1Beta1PageResponse;
+}
+
+export interface BlockstartercosmosQueryGetContributorsResponse {
+  Contributors?: BlockstartercosmosContributors;
 }
 
 export interface BlockstartercosmosQueryGetProjectResponse {
@@ -331,10 +370,52 @@ export class HttpClient<SecurityDataType = unknown> {
 }
 
 /**
- * @title blockstartercosmos/genesis.proto
+ * @title blockstartercosmos/contributors.proto
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryContributorsAll
+   * @summary Queries a list of Contributors items.
+   * @request GET:/mehdisbys/blockstartercosmos/blockstartercosmos/contributors
+   */
+  queryContributorsAll = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<BlockstartercosmosQueryAllContributorsResponse, RpcStatus>({
+      path: `/mehdisbys/blockstartercosmos/blockstartercosmos/contributors`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryContributors
+   * @summary Queries a Contributors by id.
+   * @request GET:/mehdisbys/blockstartercosmos/blockstartercosmos/contributors/{id}
+   */
+  queryContributors = (id: string, params: RequestParams = {}) =>
+    this.request<BlockstartercosmosQueryGetContributorsResponse, RpcStatus>({
+      path: `/mehdisbys/blockstartercosmos/blockstartercosmos/contributors/${id}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

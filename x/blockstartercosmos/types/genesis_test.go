@@ -31,6 +31,15 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ProjectCount: 2,
+				ContributorsList: []types.Contributors{
+					{
+						Id: 0,
+					},
+					{
+						Id: 1,
+					},
+				},
+				ContributorsCount: 2,
 				// this line is used by starport scaffolding # types/genesis/validField
 			},
 			valid: true,
@@ -58,6 +67,32 @@ func TestGenesisState_Validate(t *testing.T) {
 					},
 				},
 				ProjectCount: 0,
+			},
+			valid: false,
+		},
+		{
+			desc: "duplicated contributors",
+			genState: &types.GenesisState{
+				ContributorsList: []types.Contributors{
+					{
+						Id: 0,
+					},
+					{
+						Id: 0,
+					},
+				},
+			},
+			valid: false,
+		},
+		{
+			desc: "invalid contributors count",
+			genState: &types.GenesisState{
+				ContributorsList: []types.Contributors{
+					{
+						Id: 1,
+					},
+				},
+				ContributorsCount: 0,
 			},
 			valid: false,
 		},

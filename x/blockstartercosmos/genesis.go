@@ -16,6 +16,13 @@ func InitGenesis(ctx sdk.Context, k keeper.Keeper, genState types.GenesisState) 
 
 	// Set project count
 	k.SetProjectCount(ctx, genState.ProjectCount)
+	// Set all the contributors
+	for _, elem := range genState.ContributorsList {
+		k.SetContributors(ctx, elem)
+	}
+
+	// Set contributors count
+	k.SetContributorsCount(ctx, genState.ContributorsCount)
 	// this line is used by starport scaffolding # genesis/module/init
 	k.SetParams(ctx, genState.Params)
 }
@@ -27,6 +34,8 @@ func ExportGenesis(ctx sdk.Context, k keeper.Keeper) *types.GenesisState {
 
 	genesis.ProjectList = k.GetAllProject(ctx)
 	genesis.ProjectCount = k.GetProjectCount(ctx)
+	genesis.ContributorsList = k.GetAllContributors(ctx)
+	genesis.ContributorsCount = k.GetContributorsCount(ctx)
 	// this line is used by starport scaffolding # genesis/module/export
 
 	return genesis

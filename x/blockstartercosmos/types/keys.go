@@ -25,3 +25,8 @@ const (
 	ProjectKey      = "Project-value-"
 	ProjectCountKey = "Project-count-"
 )
+
+const (
+	ContributorsKey      = "Contributors-value-"
+	ContributorsCountKey = "Contributors-count-"
+)

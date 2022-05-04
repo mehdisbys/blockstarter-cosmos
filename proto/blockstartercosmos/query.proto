@@ -6,6 +6,7 @@ import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "blockstartercosmos/params.proto";
 import "blockstartercosmos/project.proto";
+import "blockstartercosmos/contributors.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "github.com/mehdisbys/blockstarter-cosmos/x/blockstartercosmos/types";
@@ -24,6 +25,16 @@ service Query {
 	// Queries a list of Project items.
 	rpc ProjectAll(QueryAllProjectRequest) returns (QueryAllProjectResponse) {
 		option (google.api.http).get = "/mehdisbys/blockstartercosmos/blockstartercosmos/project";
+	}
+
+// Queries a Contributors by id.
+	rpc Contributors(QueryGetContributorsRequest) returns (QueryGetContributorsResponse) {
+		option (google.api.http).get = "/mehdisbys/blockstartercosmos/blockstartercosmos/contributors/{id}";
+	}
+
+	// Queries a list of Contributors items.
+	rpc ContributorsAll(QueryAllContributorsRequest) returns (QueryAllContributorsResponse) {
+		option (google.api.http).get = "/mehdisbys/blockstartercosmos/blockstartercosmos/contributors";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -52,6 +63,23 @@ message QueryAllProjectRequest {
 
 message QueryAllProjectResponse {
 	repeated Project Project = 1 [(gogoproto.nullable) = false];
+	cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetContributorsRequest {
+	uint64 id = 1;
+}
+
+message QueryGetContributorsResponse {
+	Contributors Contributors = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllContributorsRequest {
+	cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllContributorsResponse {
+	repeated Contributors Contributors = 1 [(gogoproto.nullable) = false];
 	cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

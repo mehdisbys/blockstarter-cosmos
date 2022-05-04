@@ -7,6 +7,7 @@ import {
   PageRequest,
   PageResponse,
 } from "../cosmos/base/query/v1beta1/pagination";
+import { Contributors } from "../blockstartercosmos/contributors";
 
 export const protobufPackage =
   "mehdisbys.blockstartercosmos.blockstartercosmos";
@@ -34,6 +35,23 @@ export interface QueryAllProjectRequest {
 
 export interface QueryAllProjectResponse {
   Project: Project[];
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryGetContributorsRequest {
+  id: number;
+}
+
+export interface QueryGetContributorsResponse {
+  Contributors: Contributors | undefined;
+}
+
+export interface QueryAllContributorsRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryAllContributorsResponse {
+  Contributors: Contributors[];
   pagination: PageResponse | undefined;
 }
 
@@ -424,6 +442,325 @@ export const QueryAllProjectResponse = {
   },
 };
 
+const baseQueryGetContributorsRequest: object = { id: 0 };
+
+export const QueryGetContributorsRequest = {
+  encode(
+    message: QueryGetContributorsRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.id !== 0) {
+      writer.uint32(8).uint64(message.id);
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetContributorsRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetContributorsRequest,
+    } as QueryGetContributorsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetContributorsRequest {
+    const message = {
+      ...baseQueryGetContributorsRequest,
+    } as QueryGetContributorsRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = Number(object.id);
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetContributorsRequest): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetContributorsRequest>
+  ): QueryGetContributorsRequest {
+    const message = {
+      ...baseQueryGetContributorsRequest,
+    } as QueryGetContributorsRequest;
+    if (object.id !== undefined && object.id !== null) {
+      message.id = object.id;
+    } else {
+      message.id = 0;
+    }
+    return message;
+  },
+};
+
+const baseQueryGetContributorsResponse: object = {};
+
+export const QueryGetContributorsResponse = {
+  encode(
+    message: QueryGetContributorsResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.Contributors !== undefined) {
+      Contributors.encode(
+        message.Contributors,
+        writer.uint32(10).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryGetContributorsResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryGetContributorsResponse,
+    } as QueryGetContributorsResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Contributors = Contributors.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryGetContributorsResponse {
+    const message = {
+      ...baseQueryGetContributorsResponse,
+    } as QueryGetContributorsResponse;
+    if (object.Contributors !== undefined && object.Contributors !== null) {
+      message.Contributors = Contributors.fromJSON(object.Contributors);
+    } else {
+      message.Contributors = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryGetContributorsResponse): unknown {
+    const obj: any = {};
+    message.Contributors !== undefined &&
+      (obj.Contributors = message.Contributors
+        ? Contributors.toJSON(message.Contributors)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryGetContributorsResponse>
+  ): QueryGetContributorsResponse {
+    const message = {
+      ...baseQueryGetContributorsResponse,
+    } as QueryGetContributorsResponse;
+    if (object.Contributors !== undefined && object.Contributors !== null) {
+      message.Contributors = Contributors.fromPartial(object.Contributors);
+    } else {
+      message.Contributors = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllContributorsRequest: object = {};
+
+export const QueryAllContributorsRequest = {
+  encode(
+    message: QueryAllContributorsRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllContributorsRequest {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllContributorsRequest,
+    } as QueryAllContributorsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllContributorsRequest {
+    const message = {
+      ...baseQueryAllContributorsRequest,
+    } as QueryAllContributorsRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllContributorsRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageRequest.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllContributorsRequest>
+  ): QueryAllContributorsRequest {
+    const message = {
+      ...baseQueryAllContributorsRequest,
+    } as QueryAllContributorsRequest;
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageRequest.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
+const baseQueryAllContributorsResponse: object = {};
+
+export const QueryAllContributorsResponse = {
+  encode(
+    message: QueryAllContributorsResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    for (const v of message.Contributors) {
+      Contributors.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(
+        message.pagination,
+        writer.uint32(18).fork()
+      ).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): QueryAllContributorsResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseQueryAllContributorsResponse,
+    } as QueryAllContributorsResponse;
+    message.Contributors = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.Contributors.push(
+            Contributors.decode(reader, reader.uint32())
+          );
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryAllContributorsResponse {
+    const message = {
+      ...baseQueryAllContributorsResponse,
+    } as QueryAllContributorsResponse;
+    message.Contributors = [];
+    if (object.Contributors !== undefined && object.Contributors !== null) {
+      for (const e of object.Contributors) {
+        message.Contributors.push(Contributors.fromJSON(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromJSON(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: QueryAllContributorsResponse): unknown {
+    const obj: any = {};
+    if (message.Contributors) {
+      obj.Contributors = message.Contributors.map((e) =>
+        e ? Contributors.toJSON(e) : undefined
+      );
+    } else {
+      obj.Contributors = [];
+    }
+    message.pagination !== undefined &&
+      (obj.pagination = message.pagination
+        ? PageResponse.toJSON(message.pagination)
+        : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<QueryAllContributorsResponse>
+  ): QueryAllContributorsResponse {
+    const message = {
+      ...baseQueryAllContributorsResponse,
+    } as QueryAllContributorsResponse;
+    message.Contributors = [];
+    if (object.Contributors !== undefined && object.Contributors !== null) {
+      for (const e of object.Contributors) {
+        message.Contributors.push(Contributors.fromPartial(e));
+      }
+    }
+    if (object.pagination !== undefined && object.pagination !== null) {
+      message.pagination = PageResponse.fromPartial(object.pagination);
+    } else {
+      message.pagination = undefined;
+    }
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -432,6 +769,14 @@ export interface Query {
   Project(request: QueryGetProjectRequest): Promise<QueryGetProjectResponse>;
   /** Queries a list of Project items. */
   ProjectAll(request: QueryAllProjectRequest): Promise<QueryAllProjectResponse>;
+  /** Queries a Contributors by id. */
+  Contributors(
+    request: QueryGetContributorsRequest
+  ): Promise<QueryGetContributorsResponse>;
+  /** Queries a list of Contributors items. */
+  ContributorsAll(
+    request: QueryAllContributorsRequest
+  ): Promise<QueryAllContributorsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -472,6 +817,34 @@ export class QueryClientImpl implements Query {
     );
     return promise.then((data) =>
       QueryAllProjectResponse.decode(new Reader(data))
+    );
+  }
+
+  Contributors(
+    request: QueryGetContributorsRequest
+  ): Promise<QueryGetContributorsResponse> {
+    const data = QueryGetContributorsRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "mehdisbys.blockstartercosmos.blockstartercosmos.Query",
+      "Contributors",
+      data
+    );
+    return promise.then((data) =>
+      QueryGetContributorsResponse.decode(new Reader(data))
+    );
+  }
+
+  ContributorsAll(
+    request: QueryAllContributorsRequest
+  ): Promise<QueryAllContributorsResponse> {
+    const data = QueryAllContributorsRequest.encode(request).finish();
+    const promise = this.rpc.request(
+      "mehdisbys.blockstartercosmos.blockstartercosmos.Query",
+      "ContributorsAll",
+      data
+    );
+    return promise.then((data) =>
+      QueryAllContributorsResponse.decode(new Reader(data))
     );
   }
 }
