@@ -12,6 +12,7 @@ export interface MsgCreateProject {
   deadline: string;
   seller: string;
   targetFunding: string;
+  state: string;
 }
 
 export interface MsgCreateProjectResponse {
@@ -80,6 +81,13 @@ export interface MsgDeleteContributors {
 
 export interface MsgDeleteContributorsResponse {}
 
+export interface MsgClaimContributions {
+  creator: string;
+  projectId: number;
+}
+
+export interface MsgClaimContributionsResponse {}
+
 const baseMsgCreateProject: object = {
   creator: "",
   title: "",
@@ -87,6 +95,7 @@ const baseMsgCreateProject: object = {
   deadline: "",
   seller: "",
   targetFunding: "",
+  state: "",
 };
 
 export const MsgCreateProject = {
@@ -108,6 +117,9 @@ export const MsgCreateProject = {
     }
     if (message.targetFunding !== "") {
       writer.uint32(50).string(message.targetFunding);
+    }
+    if (message.state !== "") {
+      writer.uint32(58).string(message.state);
     }
     return writer;
   },
@@ -136,6 +148,9 @@ export const MsgCreateProject = {
           break;
         case 6:
           message.targetFunding = reader.string();
+          break;
+        case 7:
+          message.state = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -177,6 +192,11 @@ export const MsgCreateProject = {
     } else {
       message.targetFunding = "";
     }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = String(object.state);
+    } else {
+      message.state = "";
+    }
     return message;
   },
 
@@ -190,6 +210,7 @@ export const MsgCreateProject = {
     message.seller !== undefined && (obj.seller = message.seller);
     message.targetFunding !== undefined &&
       (obj.targetFunding = message.targetFunding);
+    message.state !== undefined && (obj.state = message.state);
     return obj;
   },
 
@@ -224,6 +245,11 @@ export const MsgCreateProject = {
       message.targetFunding = object.targetFunding;
     } else {
       message.targetFunding = "";
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = object.state;
+    } else {
+      message.state = "";
     }
     return message;
   },
@@ -1394,6 +1420,135 @@ export const MsgDeleteContributorsResponse = {
   },
 };
 
+const baseMsgClaimContributions: object = { creator: "", projectId: 0 };
+
+export const MsgClaimContributions = {
+  encode(
+    message: MsgClaimContributions,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.creator !== "") {
+      writer.uint32(10).string(message.creator);
+    }
+    if (message.projectId !== 0) {
+      writer.uint32(16).uint64(message.projectId);
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): MsgClaimContributions {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = { ...baseMsgClaimContributions } as MsgClaimContributions;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.creator = reader.string();
+          break;
+        case 2:
+          message.projectId = longToNumber(reader.uint64() as Long);
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgClaimContributions {
+    const message = { ...baseMsgClaimContributions } as MsgClaimContributions;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = String(object.creator);
+    } else {
+      message.creator = "";
+    }
+    if (object.projectId !== undefined && object.projectId !== null) {
+      message.projectId = Number(object.projectId);
+    } else {
+      message.projectId = 0;
+    }
+    return message;
+  },
+
+  toJSON(message: MsgClaimContributions): unknown {
+    const obj: any = {};
+    message.creator !== undefined && (obj.creator = message.creator);
+    message.projectId !== undefined && (obj.projectId = message.projectId);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<MsgClaimContributions>
+  ): MsgClaimContributions {
+    const message = { ...baseMsgClaimContributions } as MsgClaimContributions;
+    if (object.creator !== undefined && object.creator !== null) {
+      message.creator = object.creator;
+    } else {
+      message.creator = "";
+    }
+    if (object.projectId !== undefined && object.projectId !== null) {
+      message.projectId = object.projectId;
+    } else {
+      message.projectId = 0;
+    }
+    return message;
+  },
+};
+
+const baseMsgClaimContributionsResponse: object = {};
+
+export const MsgClaimContributionsResponse = {
+  encode(
+    _: MsgClaimContributionsResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): MsgClaimContributionsResponse {
+    const reader = input instanceof Uint8Array ? new Reader(input) : input;
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseMsgClaimContributionsResponse,
+    } as MsgClaimContributionsResponse;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgClaimContributionsResponse {
+    const message = {
+      ...baseMsgClaimContributionsResponse,
+    } as MsgClaimContributionsResponse;
+    return message;
+  },
+
+  toJSON(_: MsgClaimContributionsResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial(
+    _: DeepPartial<MsgClaimContributionsResponse>
+  ): MsgClaimContributionsResponse {
+    const message = {
+      ...baseMsgClaimContributionsResponse,
+    } as MsgClaimContributionsResponse;
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   CreateProject(request: MsgCreateProject): Promise<MsgCreateProjectResponse>;
@@ -1407,10 +1562,13 @@ export interface Msg {
   UpdateContributors(
     request: MsgUpdateContributors
   ): Promise<MsgUpdateContributorsResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   DeleteContributors(
     request: MsgDeleteContributors
   ): Promise<MsgDeleteContributorsResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  ClaimContributions(
+    request: MsgClaimContributions
+  ): Promise<MsgClaimContributionsResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -1517,6 +1675,20 @@ export class MsgClientImpl implements Msg {
     );
     return promise.then((data) =>
       MsgDeleteContributorsResponse.decode(new Reader(data))
+    );
+  }
+
+  ClaimContributions(
+    request: MsgClaimContributions
+  ): Promise<MsgClaimContributionsResponse> {
+    const data = MsgClaimContributions.encode(request).finish();
+    const promise = this.rpc.request(
+      "mehdisbys.blockstartercosmos.blockstartercosmos.Msg",
+      "ClaimContributions",
+      data
+    );
+    return promise.then((data) =>
+      MsgClaimContributionsResponse.decode(new Reader(data))
     );
   }
 }

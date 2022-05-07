@@ -11,4 +11,5 @@ message Project {
   string seller = 5; 
   string targetFunding = 6; 
   string creator = 7;
+  string state = 8;
 }

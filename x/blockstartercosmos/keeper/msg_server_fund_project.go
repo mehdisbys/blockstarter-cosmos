@@ -17,16 +17,6 @@ func (k msgServer) FundProject(goCtx context.Context, msg *types.MsgFundProject)
 		return nil, sdkerrors.Wrap(sdkerrors.ErrKeyNotFound, fmt.Sprintf("key %d doesn't exist", msg.Id))
 	}
 
-	// deadline, err := strconv.ParseInt(project.Deadline, 10, 64)
-	// if err != nil {
-	// 	return nil, sdkerrors.Wrap(types.ErrDeadline, "Deadline is at the wrong format")
-	// }
-
-	/*if ctx.BlockHeight() >= deadline {
-		return nil, sdkerrors.Wrap(types.ErrDeadline, "Cannot contribute to project after deadline")
-	}
-	*/
-
 	recipient, err := sdk.AccAddressFromBech32(project.Creator)
 	if err != nil {
 		panic(err)

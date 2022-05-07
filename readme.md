@@ -1,52 +1,59 @@
 # blockstartercosmos
 **blockstartercosmos** is a blockchain built using Cosmos SDK and Tendermint and created with [Starport](https://starport.com).
 
+## Description
+
+This project implements a Kickstarter-like application where people can list projects or causes that need funding and anyone can participate in their funding.
+
+Requirements: 
+
+- [x] Ability to list a project with a description + deadline + funding desired
+    
+- [x] Ability to send funds to a project :
+    
+- [x] it cannot be zero
+    
+- [x] it cannot exceed the funding amount
+    
+- [x] the project's deadline must be in the future
+
+- [ ] User can claim back donation if project fails to collect all funds needed
+    
+- [x] User can directly see which projects they contributed to
+
 ## Get started
 
 ```
-starport chain serve
+ignite chain serve
 ```
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
 
-### Configure
-
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Starport docs](https://docs.starport.com).
-
-### Web Frontend
-
-Starport has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
+### 1. Query initial balances
+```
+blockstarter-cosmosd query bank balances [Alice's address]
+```
+### 2. Create a Project
 
 ```
-cd vue
-npm install
-npm run serve
+blockstarter-cosmosd tx blockstartercosmos create-project TestTitle description-project 1 x 9999token --from alice --chain-id blockstartercosmos -y
 ```
 
-The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Starport front-end development](https://github.com/tendermint/vue).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
+### 3. List the project
 ```
-git tag v0.1
-git push origin v0.1
+blockstarter-cosmosd query blockstartercosmos list-project
 ```
 
-After a draft release is created, make your final changes from the release page and publish it.
-
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
-
+### 4. Fund project
 ```
-curl https://get.starport.com/mehdisbys/blockstarter-cosmos@latest! | sudo bash
+blockstarter-cosmosd tx blockstartercosmos fund-project 0 9000token --from bob --chain-id blockstartercosmos -y
 ```
-`mehdisbys/blockstarter-cosmos` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
 
-## Learn more
+### 5. List contributors
+```
+blockstarter-cosmosd query blockstartercosmos list-contributors
+```
 
-- [Starport](https://starport.com)
-- [Tutorials](https://docs.starport.com/guide)
-- [Starport docs](https://docs.starport.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/H6wGTY8sxw)
+### 6. Claim the contributions as the project creator
+```
+blockstarter-cosmosd tx blockstartercosmos claim-contributions 0 --from alice --chain-id blockstartercosmos -y
+```

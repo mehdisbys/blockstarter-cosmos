@@ -17,6 +17,7 @@ service Msg {
 rpc CreateContributors(MsgCreateContributors) returns (MsgCreateContributorsResponse);
   rpc UpdateContributors(MsgUpdateContributors) returns (MsgUpdateContributorsResponse);
   rpc DeleteContributors(MsgDeleteContributors) returns (MsgDeleteContributorsResponse);
+  rpc ClaimContributions(MsgClaimContributions) returns (MsgClaimContributionsResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -27,6 +28,7 @@ message MsgCreateProject {
   string deadline = 4;
   string seller = 5;
   string targetFunding = 6;
+  string state = 7;
 }
 
 message MsgCreateProjectResponse {
@@ -96,5 +98,13 @@ message MsgDeleteContributors {
 }
 
 message MsgDeleteContributorsResponse {}
+
+message MsgClaimContributions {
+  string creator = 1;
+  uint64 projectId = 2;
+}
+
+message MsgClaimContributionsResponse {
+}
 
 // this line is used by starport scaffolding # proto/tx/message

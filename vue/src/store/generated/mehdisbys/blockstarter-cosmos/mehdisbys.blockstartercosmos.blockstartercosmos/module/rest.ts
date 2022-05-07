@@ -20,6 +20,8 @@ export interface BlockstartercosmosContributors {
   creator?: string;
 }
 
+export type BlockstartercosmosMsgClaimContributionsResponse = object;
+
 export type BlockstartercosmosMsgClaimDonationResponse = object;
 
 export interface BlockstartercosmosMsgCreateContributorsResponse {
@@ -56,6 +58,7 @@ export interface BlockstartercosmosProject {
   seller?: string;
   targetFunding?: string;
   creator?: string;
+  state?: string;
 }
 
 export interface BlockstartercosmosQueryAllContributorsResponse {

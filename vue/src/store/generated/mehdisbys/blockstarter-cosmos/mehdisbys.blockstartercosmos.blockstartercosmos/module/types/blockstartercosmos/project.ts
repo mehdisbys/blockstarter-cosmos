@@ -13,6 +13,7 @@ export interface Project {
   seller: string;
   targetFunding: string;
   creator: string;
+  state: string;
 }
 
 const baseProject: object = {
@@ -23,6 +24,7 @@ const baseProject: object = {
   seller: "",
   targetFunding: "",
   creator: "",
+  state: "",
 };
 
 export const Project = {
@@ -47,6 +49,9 @@ export const Project = {
     }
     if (message.creator !== "") {
       writer.uint32(58).string(message.creator);
+    }
+    if (message.state !== "") {
+      writer.uint32(66).string(message.state);
     }
     return writer;
   },
@@ -78,6 +83,9 @@ export const Project = {
           break;
         case 7:
           message.creator = reader.string();
+          break;
+        case 8:
+          message.state = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -124,6 +132,11 @@ export const Project = {
     } else {
       message.creator = "";
     }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = String(object.state);
+    } else {
+      message.state = "";
+    }
     return message;
   },
 
@@ -138,6 +151,7 @@ export const Project = {
     message.targetFunding !== undefined &&
       (obj.targetFunding = message.targetFunding);
     message.creator !== undefined && (obj.creator = message.creator);
+    message.state !== undefined && (obj.state = message.state);
     return obj;
   },
 
@@ -177,6 +191,11 @@ export const Project = {
       message.creator = object.creator;
     } else {
       message.creator = "";
+    }
+    if (object.state !== undefined && object.state !== null) {
+      message.state = object.state;
+    } else {
+      message.state = "";
     }
     return message;
   },

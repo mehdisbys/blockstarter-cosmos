@@ -16,6 +16,7 @@ func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgCreateContributors{}, "blockstartercosmos/CreateContributors", nil)
 	cdc.RegisterConcrete(&MsgUpdateContributors{}, "blockstartercosmos/UpdateContributors", nil)
 	cdc.RegisterConcrete(&MsgDeleteContributors{}, "blockstartercosmos/DeleteContributors", nil)
+	cdc.RegisterConcrete(&MsgClaimContributions{}, "blockstartercosmos/ClaimContributions", nil)
 	// this line is used by starport scaffolding # 2
 }
 
@@ -35,6 +36,9 @@ func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 		&MsgCreateContributors{},
 		&MsgUpdateContributors{},
 		&MsgDeleteContributors{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgClaimContributions{},
 	)
 	// this line is used by starport scaffolding # 3
 
